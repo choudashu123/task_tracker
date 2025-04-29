@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
-// const projectRoutes = require('./routes/projectRoutes');
+const projectRoutes = require('./routes/projectRoutes');
 // const taskRoutes = require('./routes/taskRoutes');
 const cors = require('cors');
 const app = express();
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-// app.use('/api/projects', projectRoutes);
+app.use('/api/projects', projectRoutes);
 // app.use('/api/tasks', taskRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
