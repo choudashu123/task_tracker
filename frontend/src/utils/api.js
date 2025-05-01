@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchWithToken = async (url, method = 'GET', data, token) => {
   return fetch(`${API_URL}${url}`, {
@@ -25,7 +25,7 @@ export const postData = async (url, data) => {
 };
 
 export const putData = async (endpoint, data) => {
-  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, {
+  const res = await fetch(`${API_URL}${endpoint}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const putData = async (endpoint, data) => {
 };
 
 export const deleteData = async (endpoint) => {
-  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}${endpoint}`, {
+  const res = await fetch(`${API_URL}${endpoint}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
