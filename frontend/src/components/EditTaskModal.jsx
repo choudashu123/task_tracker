@@ -54,7 +54,7 @@ const EditTaskModal = ({ task, onClose, onUpdate, token }) => {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-white"
             >
               <option value="Not Started">Not Started</option>
               <option value="In Progress">In Progress</option>

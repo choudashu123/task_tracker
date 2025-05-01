@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+
 
 const CreateTaskModal = ({ isOpen, onClose, onCreate, projectId }) => {
   const [title, setTitle] = useState('');
@@ -60,7 +62,7 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate, projectId }) => {
               id="status"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-800 dark:text-white"
             >
               <option value="To Do">To Do</option>
               <option value="In Progress">In Progress</option>
