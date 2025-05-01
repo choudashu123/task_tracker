@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import EditTaskModal from './EditTaskModal';
-import { deleteData } from '../utils/api';
+import { fetchWithToken } from '../utils/api';
 
-const TaskCard = ({ task, onUpdate, onDelete }) => {
+const TaskCard = ({ task, onUpdate, onDelete, token }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this task?')) {
-      await deleteData(`/tasks/${task._id}`);
+      const data = await fetchWithToken(`/tasks/${task._id}`, "DELETE", null, token);
       onDelete(task._id);
     }
   };
@@ -41,6 +41,7 @@ const TaskCard = ({ task, onUpdate, onDelete }) => {
             onUpdate(updatedTask);
             setIsEditOpen(false);
           }}
+          token={token}
         />
       )}
     </div>

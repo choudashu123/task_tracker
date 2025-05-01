@@ -1,22 +1,28 @@
 import { useState } from 'react';
-import { putData } from '../utils/api';
+import { fetchWithToken, putData } from '../utils/api';
 
-const EditTaskModal = ({ task, onClose, onUpdate }) => {
+const EditTaskModal = ({ task, onClose, onUpdate, token }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [status, setStatus] = useState(task.status);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedTask = { ...task, title, description, status };
+    const updatedTask = {
+      ...task,
+      title,
+      description,
+      status,
+      dateCompleted: status === "Completed" ? new Date().toISOString() : null,
+    };
 
-    // Optional: Automatically set dateCompleted when status is "Completed"
-    if (status === 'Completed' && !task.dateCompleted) {
-      updatedTask.dateCompleted = new Date();
+    try {
+      const data = await fetchWithToken(`/tasks/${task._id}`, "PUT", updatedTask, token);
+      onUpdate(data);  // update parent state
+      onClose();       // close modal
+    } catch (err) {
+      console.error("Error editing the task", err);
     }
-
-    const result = await putData(`/tasks/${task._id}`, updatedTask);
-    onUpdate(result);
   };
 
   return (

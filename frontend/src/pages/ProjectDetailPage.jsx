@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import CreateTaskModal from '../components/CreateTaskModal';
 import { fetchWithToken, fetchTasksByProject } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import TaskCard from '../components/TaskCard';
 
 
 const ProjectDetailPage = () => {
@@ -29,6 +30,15 @@ const ProjectDetailPage = () => {
     } catch (err) {
       console.error("error creating task", err)
     }
+  };
+  const handleUpdateTask = (updatedTask) => {
+    setTasks((prev) =>
+      prev.map((task) => (task._id === updatedTask._id ? updatedTask : task))
+    );
+  };
+  
+  const handleDeleteTask = (deletedId) => {
+    setTasks((prev) => prev.filter((task) => task._id !== deletedId));
   };
 
   useEffect(() => {
@@ -58,19 +68,12 @@ const ProjectDetailPage = () => {
       {tasks.length === 0 ? (
         <p className="text-gray-500">No tasks yet for this project.</p>
       ) : (
-        <ul className="space-y-2">
+        <div className="grid gap-4">
           {tasks.map((task) => (
-            <li key={task._id} className="border p-3 rounded shadow-sm">
-              <h4 className="font-semibold">{task.title}</h4>
-              <p className="text-sm text-gray-600">{task.description}</p>
-              <p className="text-sm text-blue-700 mt-1">Status: {task.status}</p>
-              {task.completedAt && (
-                <p className="text-sm text-green-600">Completed At: {new Date(task.completedAt).toLocaleString()}</p>
-              )}
-            </li>
+            <TaskCard key={task._id} task={task} onUpdate={handleUpdateTask} onDelete={handleDeleteTask} token={user.token} />
           ))}
-        </ul>
-      )}
+          </div>
+        )}
     </div>
   );
 };
