@@ -11,12 +11,17 @@ export const fetchWithToken = async (url, method = 'GET', data, token) => {
   }).then(res => res.json());
 };
 
-export const postData = (url, data) => {
-  return fetch(`${API_URL}${url}`, {
+export const postData = async (url, data) => {
+  const res =  await fetch(`${API_URL}${url}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
-  }).then(res => res.json());
+  })
+  const response = await res.json()
+  if (!res.ok){
+    console.log("Error logging in")
+  }
+  return response;
 };
 
 export const putData = async (endpoint, data) => {

@@ -2,57 +2,67 @@ const Task = require('../models/Task');
 const Project = require('../models/Project')
 
 exports.createTask = async (req, res) => {
-  try {
-      const { title, description, status, projectId } = req.body;
+    try {
+        const { title, description, status, projectId } = req.body;
 
-      if (!title || !projectId) {
-          return res.status(400).json({ message: 'Title and projectId are required.' });
-      }
+        if (!title || !projectId) {
+            return res.status(400).json({ message: 'Title and projectId are required.' });
+        }
 
-      // Add userId to the task being created
-      const task = new Task({
-          title,
-          description,
-          status,
-          projectId,
-          userId: req.user._id,  // Set userId from the authenticated user
-          createdAt: new Date(),
-      });
+        // Add userId to the task being created
+        const task = new Task({
+            title,
+            description,
+            status,
+            projectId,
+            userId: req.user._id,  // Set userId from the authenticated user
+            createdAt: new Date(),
+        });
 
-      await task.save();
-      res.status(201).json(task);
-  } catch (err) {
-      console.error('Error creating task:', err);
-      res.status(500).json({ message: err.message });
-  }
+        await task.save();
+        res.status(201).json(task);
+    } catch (err) {
+        console.error('Error creating task:', err);
+        res.status(500).json({ message: err.message });
+    }
 };
 
 
 exports.getTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
-        if (!task) return res.status(404).json({ message: 'Task Not found'});
+        if (!task) return res.status(404).json({ message: 'Task Not found' });
         res.json(task);
     } catch (err) {
-        res.status(500).json({message:err.message});
+        res.status(500).json({ message: err.message });
     }
 };
 
 exports.updateTask = async (req, res) => {
     try {
-        const task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true});
-        if (!task) return res.status(404).json({ message: 'Task not found'});
+        const taskId = req.params.id;
+        const updates = req.body;
+
+        // If the status is being updated to "Completed", set completedAt
+        if (updates.status === 'Completed') {
+            updates.completedAt = new Date();
+        } else if (updates.status && updates.status !== 'Completed') {
+            // If status is changed from Completed to something else, remove completedAt
+            updates.completedAt = null;
+        }
+        const task = await Task.findByIdAndUpdate(taskId, req.body, { new: true });
+        if (!task) return res.status(404).json({ message: 'Task not found' });
         res.json(task);
     } catch (err) {
-        res.status(500).json({ message: err.message});
+        res.status(500).json({ message: err.message });
     }
 }
 
 exports.deleteTask = async (req, res) => {
     try {
         const task = await Task.findByIdAndDelete(req.params.id);
-        if (!task) return res.status(404).json({ message: 'Task not found'});
-        res.json({ message: 'Task deleted'});
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+        res.json({ message: 'Task deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -94,8 +104,7 @@ exports.deleteTask = async (req, res) => {
 
 exports.getTasksByProject = async (req, res) => {
     const projectId = req.params.projectId;
-    const tasks = await Task.find({projectId})
-    console.log("all tasks", tasks)
+    const tasks = await Task.find({ projectId })
     res.json(tasks);
 }
 

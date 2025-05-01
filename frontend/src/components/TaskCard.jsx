@@ -17,11 +17,18 @@ const TaskCard = ({ task, onUpdate, onDelete, token }) => {
       <h3 className="text-xl font-semibold">{task.title}</h3>
       <p className="text-gray-600">{task.description}</p>
       <div className="mt-2 text-sm text-gray-500">
-        <p>Status: {task.status}</p>
-        <p>Created: {new Date(task.dateCreated).toLocaleDateString()}</p>
-        {task.dateCompleted && (
-          <p>Completed: {new Date(task.dateCompleted).toLocaleDateString()}</p>
-        )}
+        <p>Status: {task.status}
+          {task.completedAt && (
+            <span> @
+            {task.completedAt
+              ? new Date(task.completedAt).toLocaleDateString()
+              : 'Unknown'}</span>
+          )}
+        </p>
+        <p>Created:{' '}
+      {task.createdAt
+        ? new Date(task.createdAt).toLocaleDateString()
+        : 'Unknown'}</p>
       </div>
 
       <div className="flex justify-end mt-3 space-x-2">

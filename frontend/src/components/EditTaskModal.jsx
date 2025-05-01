@@ -13,7 +13,7 @@ const EditTaskModal = ({ task, onClose, onUpdate, token }) => {
       title,
       description,
       status,
-      dateCompleted: status === "Completed" ? new Date().toISOString() : null,
+      completedAt: status === "Completed" ? new Date().toISOString() : null,
     };
 
     try {

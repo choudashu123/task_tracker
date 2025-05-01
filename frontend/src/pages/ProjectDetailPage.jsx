@@ -4,6 +4,10 @@ import CreateTaskModal from '../components/CreateTaskModal';
 import { fetchWithToken, fetchTasksByProject } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import TaskCard from '../components/TaskCard';
+import { useNavigate } from 'react-router-dom';
+
+// inside component
+
 
 
 const ProjectDetailPage = () => {
@@ -11,6 +15,8 @@ const ProjectDetailPage = () => {
   const { id: projectId } = useParams();
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   const fetchTasks = async () => {
     try {
@@ -36,7 +42,7 @@ const ProjectDetailPage = () => {
       prev.map((task) => (task._id === updatedTask._id ? updatedTask : task))
     );
   };
-  
+
   const handleDeleteTask = (deletedId) => {
     setTasks((prev) => prev.filter((task) => task._id !== deletedId));
   };
@@ -49,6 +55,12 @@ const ProjectDetailPage = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Project Details</h2>
       <p className="mb-4 text-gray-600">Project ID: {projectId}</p>
+      <button
+        onClick={() => navigate('/')}
+        className="mb-4 mr-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+      >
+        ← Dashboard
+      </button>
 
       <button
         onClick={() => setModalOpen(true)}
@@ -72,8 +84,8 @@ const ProjectDetailPage = () => {
           {tasks.map((task) => (
             <TaskCard key={task._id} task={task} onUpdate={handleUpdateTask} onDelete={handleDeleteTask} token={user.token} />
           ))}
-          </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

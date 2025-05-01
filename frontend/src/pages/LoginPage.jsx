@@ -12,6 +12,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     try {
       const res = await postData('/auth/login', { email, password });
       if (res.token) {
