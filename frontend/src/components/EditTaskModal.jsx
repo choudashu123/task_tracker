@@ -27,11 +27,11 @@ const EditTaskModal = ({ task, onClose, onUpdate, token }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-semibold mb-4">Edit Task</h2>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
+        <h2 className="text-2xl font-semibold mb-4 dark:text-white">Edit Task</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600">Title</label>
+            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Title</label>
             <input
               type="text"
               value={title}
@@ -41,7 +41,7 @@ const EditTaskModal = ({ task, onClose, onUpdate, token }) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600">Description</label>
+            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -50,7 +50,7 @@ const EditTaskModal = ({ task, onClose, onUpdate, token }) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600">Status</label>
+            <label className="block text-sm font-medium text-gray-600 dark:text-gray-300">Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}

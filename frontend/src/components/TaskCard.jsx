@@ -13,7 +13,7 @@ const TaskCard = ({ task, onUpdate, onDelete, token }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
       <h3 className="text-xl font-semibold">{task.title}</h3>
       <p className="text-gray-600">{task.description}</p>
       <div className="mt-2 text-sm text-gray-500">

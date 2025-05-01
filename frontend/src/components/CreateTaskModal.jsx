@@ -30,11 +30,11 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate, projectId }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-semibold mb-4">Create New Task</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-600">Task Title</label>
+            <label htmlFor="title" className="block text-sm font-medium text-gray-600 dark:text-gray-300">Task Title</label>
             <input
               type="text"
               id="title"
@@ -45,7 +45,7 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate, projectId }) => {
             />
           </div>
           <div>
-            <label htmlFor="description" className="block text-sm font-medium text-gray-600">Description</label>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-600 dark:text-gray-300">Description</label>
             <textarea
               id="description"
               value={description}
@@ -55,7 +55,7 @@ const CreateTaskModal = ({ isOpen, onClose, onCreate, projectId }) => {
             />
           </div>
           <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-600">Status</label>
+            <label htmlFor="status" className="block text-sm font-medium text-gray-600 dark:text-gray-300">Status</label>
             <select
               id="status"
               value={status}
