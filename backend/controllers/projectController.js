@@ -1,4 +1,5 @@
 const Project = require('../models/Project');
+const Task = require('../models/Task');
 
 exports.createProject = async (req, res) => {
     try {
@@ -20,3 +21,4 @@ exports.getProjects = async (req, res) => {
         res.status(500).json({message: err.message});
     }
 };
+
